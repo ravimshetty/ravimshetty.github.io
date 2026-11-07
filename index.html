@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ravindher Madishetty — Agentic AI Architect</title>
+<meta name="description" content="Ravindher Madishetty — Technical Architect, Enterprise AI. Agentic AI for telecom billing and network operations.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0b0f14; --bg2:#111821; --card:#141c26; --line:#223040;
+    --ink:#e8eef5; --muted:#8fa1b3; --accent:#3ee6a4; --accent2:#f5b544;
+    --radius:14px; --max:1120px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{background:var(--bg);color:var(--ink);font-family:Inter,system-ui,sans-serif;line-height:1.6;font-size:16px;-webkit-font-smoothing:antialiased}
+  a{color:inherit;text-decoration:none}
+  .wrap{max-width:var(--max);margin:0 auto;padding:0 22px}
+  .mono{font-family:"IBM Plex Mono",monospace}
+  h1,h2,h3{font-family:"Space Grotesk",sans-serif;line-height:1.15;letter-spacing:-.02em}
+
+  /* nav */
+  header{position:sticky;top:0;z-index:50;background:rgba(11,15,20,.82);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+  nav{display:flex;align-items:center;justify-content:space-between;height:64px}
+  .brand{font-family:"Space Grotesk";font-weight:700;font-size:1.05rem;display:flex;gap:10px;align-items:center}
+  .dot{width:9px;height:9px;border-radius:50%;background:var(--accent);box-shadow:0 0 12px var(--accent);animation:pulse 2.4s infinite}
+  @keyframes pulse{50%{opacity:.35}}
+  .links{display:flex;gap:26px;font-size:.92rem;color:var(--muted)}
+  .links a:hover{color:var(--accent)}
+  .menu-btn{display:none;background:none;border:1px solid var(--line);color:var(--ink);border-radius:8px;padding:6px 10px;font-size:.9rem}
+
+  /* hero */
+  .hero{padding:84px 0 64px;position:relative;overflow:hidden}
+  .hero::before{content:"";position:absolute;inset:0;background:
+     radial-gradient(600px 300px at 85% 10%,rgba(62,230,164,.12),transparent 70%),
+     radial-gradient(500px 280px at 0% 90%,rgba(245,181,68,.08),transparent 70%);pointer-events:none}
+  .hero-grid{display:grid;grid-template-columns:1.35fr .9fr;gap:56px;align-items:center;position:relative}
+  .eyebrow{display:inline-flex;gap:8px;align-items:center;font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);border:1px solid rgba(62,230,164,.35);padding:6px 12px;border-radius:999px}
+  .hero h1{font-size:clamp(2.4rem,5.4vw,4.1rem);margin:22px 0 10px}
+  .hero .title{font-size:clamp(1.05rem,2vw,1.3rem);color:var(--accent2);font-family:"Space Grotesk";font-weight:500}
+  .hero p.intro{color:var(--muted);max-width:580px;margin:20px 0 14px;font-size:1.05rem}
+  .status{font-size:.85rem;color:var(--muted);display:flex;flex-wrap:wrap;gap:8px 18px;margin-bottom:28px}
+  .status span::before{content:"▸ ";color:var(--accent)}
+  .btns{display:flex;gap:12px;flex-wrap:wrap}
+  .btn{display:inline-block;padding:12px 22px;border-radius:10px;font-weight:500;font-size:.95rem;transition:.2s}
+  .btn.primary{background:var(--accent);color:#06130d}
+  .btn.primary:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(62,230,164,.3)}
+  .btn.ghost{border:1px solid var(--line)}
+  .btn.ghost:hover{border-color:var(--accent);color:var(--accent)}
+
+  .portrait{background:linear-gradient(160deg,#16212d,#0e151d);border:1px solid var(--line);border-radius:22px;aspect-ratio:4/5;display:flex;flex-direction:column;justify-content:space-between;padding:22px;position:relative;overflow:hidden}
+  .portrait .mono-tag{font-size:.75rem;color:var(--muted)}
+  .initials{font-family:"Space Grotesk";font-weight:700;font-size:7rem;color:transparent;-webkit-text-stroke:1.5px var(--accent);text-align:center;line-height:1}
+  .terminal{background:#0a0f14;border:1px solid var(--line);border-radius:10px;padding:12px 14px;font-size:.74rem;line-height:1.7}
+  .terminal .ok{color:var(--accent)} .terminal .warn{color:var(--accent2)} .terminal .dim{color:#5d6f80}
+  .portrait img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+
+  .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:56px;position:relative}
+  .stat{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:20px}
+  .stat b{display:block;font-family:"Space Grotesk";font-size:2rem;color:var(--ink)}
+  .stat span{font-size:.85rem;color:var(--muted)}
+
+  /* sections */
+  section{padding:84px 0;border-top:1px solid var(--line)}
+  .sec-head{margin-bottom:40px;max-width:720px}
+  .kicker{font-size:.78rem;letter-spacing:.16em;text-transform:uppercase;color:var(--accent)}
+  .sec-head h2{font-size:clamp(1.8rem,3.6vw,2.6rem);margin:10px 0 12px}
+  .sec-head p{color:var(--muted)}
+
+  /* pipeline */
+  .pipe{display:grid;grid-template-columns:repeat(6,1fr);gap:12px;counter-reset:s}
+  .stage{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:20px 16px;position:relative;transition:.25s}
+  .stage:hover{border-color:var(--accent);transform:translateY(-4px)}
+  .stage::before{counter-increment:s;content:"0" counter(s);font-family:"IBM Plex Mono";font-size:.75rem;color:var(--accent)}
+  .stage h3{font-size:1.02rem;margin:10px 0 8px}
+  .stage p{font-size:.84rem;color:var(--muted)}
+  .stage:not(:last-child)::after{content:"→";position:absolute;right:-11px;top:50%;transform:translateY(-50%);color:var(--accent);font-size:.9rem;z-index:2}
+  .note{margin-top:22px;padding:16px 20px;border-left:3px solid var(--accent2);background:rgba(245,181,68,.06);border-radius:0 10px 10px 0;color:var(--muted);font-size:.92rem}
+  .note b{color:var(--accent2)}
+
+  /* experience */
+  .job{display:grid;grid-template-columns:220px 1fr;gap:28px;padding:28px 0;border-bottom:1px dashed var(--line)}
+  .job:last-child{border-bottom:none}
+  .job .when{font-size:.85rem;color:var(--muted)}
+  .badge{display:inline-block;font-size:.7rem;padding:3px 9px;border-radius:999px;background:rgba(62,230,164,.12);color:var(--accent);margin-top:8px}
+  .job h3{font-size:1.3rem}
+  .job .org{color:var(--accent2);font-size:.95rem;margin:4px 0 12px}
+  .job ul{padding-left:18px;color:var(--muted)}
+  .job li{margin:6px 0}
+  .earlier{display:flex;flex-wrap:wrap;gap:10px;margin-top:6px}
+  .earlier span{border:1px solid var(--line);padding:8px 14px;border-radius:10px;font-size:.9rem}
+
+  /* projects */
+  .projects{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
+  .proj{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:26px;display:flex;flex-direction:column;gap:12px;transition:.25s}
+  .proj:hover{border-color:var(--accent)}
+  .proj .tag{font-size:.72rem;color:var(--accent2);letter-spacing:.1em;text-transform:uppercase}
+  .proj h3{font-size:1.25rem}
+  .proj p{color:var(--muted);font-size:.93rem}
+  .chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:auto}
+  .chip{font-family:"IBM Plex Mono";font-size:.72rem;padding:4px 9px;border-radius:6px;background:#0d141c;border:1px solid var(--line);color:#b9c7d4}
+
+  /* expertise */
+  .tags{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:34px}
+  .tags span{padding:8px 14px;border-radius:999px;border:1px solid var(--line);font-size:.88rem;background:var(--bg2)}
+  .groups{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+  .group{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:22px}
+  .group h3{font-size:1rem;margin-bottom:12px;color:var(--accent)}
+  .group ul{list-style:none;color:var(--muted);font-size:.9rem}
+  .group li{padding:5px 0;border-bottom:1px solid rgba(34,48,64,.6)}
+  .group li:last-child{border:none}
+
+  /* build in public */
+  .bip{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+  .bip ol{padding-left:20px;color:var(--muted)}
+  .bip li{margin:7px 0}
+
+  /* credentials */
+  .creds{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
+
+  /* contact */
+  .contact-box{background:linear-gradient(140deg,#13202b,#0f1720);border:1px solid var(--line);border-radius:22px;padding:44px;display:grid;grid-template-columns:1.1fr 1fr;gap:40px}
+  .contact-box h2{font-size:clamp(1.8rem,3.4vw,2.4rem);margin:10px 0 14px}
+  .contact-box p{color:var(--muted)}
+  .clist{display:flex;flex-direction:column;gap:10px}
+  .crow{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:14px 16px;border:1px solid var(--line);border-radius:12px;background:var(--bg)}
+  .crow small{display:block;color:var(--muted);font-size:.72rem;text-transform:uppercase;letter-spacing:.1em}
+  .crow .v{font-size:.95rem;word-break:break-all}
+  .copy{background:none;border:1px solid var(--line);color:var(--accent);border-radius:8px;padding:6px 12px;font-size:.78rem;cursor:pointer;font-family:inherit;flex-shrink:0}
+  .copy:hover{border-color:var(--accent)}
+
+  footer{padding:34px 0;border-top:1px solid var(--line);color:var(--muted);font-size:.85rem}
+  footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
+
+  .reveal{opacity:0;transform:translateY(18px);transition:opacity .7s ease,transform .7s ease}
+  .reveal.in{opacity:1;transform:none}
+
+  @media (max-width:980px){
+    .hero-grid{grid-template-columns:1fr}
+    .portrait{max-width:380px;aspect-ratio:1/1}
+    .pipe{grid-template-columns:repeat(2,1fr)}
+    .stage::after{display:none}
+    .groups{grid-template-columns:repeat(2,1fr)}
+    .stats{grid-template-columns:repeat(2,1fr)}
+    .contact-box{grid-template-columns:1fr;padding:30px}
+  }
+  @media (max-width:720px){
+    .links{display:none;position:absolute;top:64px;left:0;right:0;flex-direction:column;gap:0;background:var(--bg2);border-bottom:1px solid var(--line)}
+    .links.open{display:flex}
+    .links a{padding:14px 22px;border-top:1px solid var(--line)}
+    .menu-btn{display:block}
+    .hero{padding:52px 0 44px}
+    section{padding:60px 0}
+    .job{grid-template-columns:1fr;gap:8px}
+    .projects,.bip,.creds,.groups{grid-template-columns:1fr}
+    .pipe{grid-template-columns:1fr}
+  }
+  @media (prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none}.dot{animation:none}}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <nav>
+      <a href="#top" class="brand"><span class="dot"></span>Ravindher Madishetty</a>
+      <button class="menu-btn" id="menuBtn" aria-label="Menu">Menu</button>
+      <div class="links" id="links">
+        <a href="#pipeline">Pipeline</a>
+        <a href="#work">Work</a>
+        <a href="#projects">Projects</a>
+        <a href="#expertise">Expertise</a>
+        <a href="#contact">Contact</a>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+  <!-- HERO -->
+  <div class="hero">
+    <div class="wrap">
+      <div class="hero-grid">
+        <div>
+          <span class="eyebrow mono">● Agentic AI · Telecom Operations</span>
+          <h1>Ravindher Madishetty</h1>
+          <div class="title">Technical Architect, Enterprise AI — Agentic Systems for Billing &amp; Network Operations</div>
+          <p class="intro">I design and build multi-agent AI systems that resolve real operational failures — from billing pipeline errors to NOC incidents. 14+ years across data science, ML and AI, now focused on agents that act safely: deterministic where the fix is known, human-in-the-loop where it isn't.</p>
+          <div class="status mono">
+            <span>Technical Architect, Enterprise AI @ HCLTech</span>
+            <span>Based in Hyderabad · Open to Dubai / UAE</span>
+          </div>
+          <div class="btns">
+            <a href="#contact" class="btn primary">Get in touch</a>
+            <a href="#projects" class="btn ghost">View project portfolio</a>
+          </div>
+        </div>
+
+        <!-- To use your photo: add <img src="photo.jpg" alt="Ravindher Madishetty"> inside .portrait -->
+        <div class="portrait reveal">
+          <div class="mono-tag mono">~/agents/billing-supervisor</div>
+          <div class="initials">RM</div>
+          <div class="terminal mono">
+            <div class="dim">$ triage --source=mediation</div>
+            <div><span class="warn">ERR</span> PBF map not found · job #4471</div>
+            <div><span class="ok">✓</span> matched known pattern · conf 0.94</div>
+            <div><span class="ok">✓</span> remediation SQL executed</div>
+            <div><span class="ok">✓</span> CDR batch re-rated · closed</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="stats">
+        <div class="stat reveal"><b>14+</b><span>years in data science, ML &amp; AI</span></div>
+        <div class="stat reveal"><b>7</b><span>enterprises — HCLTech, TCS, Tech Mahindra &amp; more</span></div>
+        <div class="stat reveal"><b>2</b><span>telecom ops domains automated: Billing &amp; NOC</span></div>
+        <div class="stat reveal"><b>15</b><span>AI engineering projects being built in public</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PIPELINE -->
+  <section id="pipeline">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <div class="kicker mono">How my agents work</div>
+        <h2>From failed job to resolved incident</h2>
+        <p>The pattern behind my telecom operations agents — built on LangGraph with a supervisor that routes on confidence, not guesswork.</p>
+      </div>
+      <div class="pipe">
+        <div class="stage reveal"><h3>Ingest</h3><p>Logs, mediation jobs and CDR pipeline events streamed via Filebeat &amp; Logstash into OpenSearch.</p></div>
+        <div class="stage reveal"><h3>Detect</h3><p>Failures surfaced and classified — "PBF map not found", "metafile not received", rating errors.</p></div>
+        <div class="stage reveal"><h3>Retrieve</h3><p>Hybrid search + reranking over runbooks and past resolutions in a vector store.</p></div>
+        <div class="stage reveal"><h3>Route</h3><p>Supervisor agent scores confidence and picks the deterministic or exploratory path.</p></div>
+        <div class="stage reveal"><h3>Remediate</h3><p>Known fixes run as first-class actions — SQL scripts, job re-triggers, re-rating.</p></div>
+        <div class="stage reveal"><h3>Learn</h3><p>Every outcome is audited and fed back, so the next occurrence is resolved faster.</p></div>
+      </div>
+      <div class="note reveal"><b>Human-in-the-loop by design:</b> low-confidence or novel failures are escalated to an engineer with full context instead of being acted on automatically.</div>
+    </div>
+  </section>
+
+  <!-- WORK -->
+  <section id="work">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <div class="kicker mono">Work</div>
+        <h2>Experience</h2>
+      </div>
+
+      <div class="job reveal">
+        <div><div class="when mono">Mar 2025 — Present</div><span class="badge">Current · Full-time</span></div>
+        <div>
+          <h3>Technical Architect, Enterprise AI</h3>
+          <div class="org">HCLTech</div>
+          <ul>
+            <li>Architect agentic AI solutions for telecom operations automation across billing and network operations (NOC).</li>
+            <li>Designed a multi-agent billing operations system — LangGraph supervisor with confidence-scored routing between deterministic fixes and human escalation.</li>
+            <li>Built a log &amp; error-resolution pipeline (Filebeat, Logstash, OpenSearch, vector search) with human-in-the-loop resolution.</li>
+            <li>Took the billing agent to production on an on-premise server, serving the chatbot via FastAPI/Uvicorn.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="job reveal">
+        <div><div class="when mono">Earlier</div></div>
+        <div>
+          <h3>Data Science, ML &amp; AI roles</h3>
+          <div class="org">10+ years across consulting, IT services and research</div>
+          <div class="earlier">
+            <span>CGI</span><span>ISB</span><span>Datamatics</span><span>Bridgei2i</span><span>Tech Mahindra</span><span>TCS</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section id="projects">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <div class="kicker mono">Projects</div>
+        <h2>Agents built for real operations</h2>
+        <p>Production systems and portfolio builds — each documented with architecture, run steps, observability and evals.</p>
+      </div>
+      <div class="projects">
+        <div class="proj reveal">
+          <div class="tag mono">Telecom · Billing</div>
+          <h3>Multi-Agent Billing Operations System</h3>
+          <p>Supervisor agent that triages mediation and rating-engine failures, executes known SQL remediations and escalates the unknown with full context.</p>
+          <div class="chips"><span class="chip">LangGraph</span><span class="chip">LangChain</span><span class="chip">OpenSearch</span><span class="chip">SQLite</span><span class="chip">FastAPI</span><span class="chip">Docker</span></div>
+          <a href="https://ravimshetty.github.io/billops-agent" class="mono" style="color:var(--accent);font-size:.85rem">▸ Live demo</a>
+        </div>
+        <div class="proj reveal">
+          <div class="tag mono">Telecom · NOC</div>
+          <h3>Error-Resolution Pipeline</h3>
+          <p>Log ingestion to resolution: Filebeat and Logstash into OpenSearch, vector-store retrieval of past fixes, and a human-in-the-loop resolution flow.</p>
+          <div class="chips"><span class="chip">Filebeat</span><span class="chip">Logstash</span><span class="chip">OpenSearch</span><span class="chip">Vector DB</span><span class="chip">HITL</span></div>
+        </div>
+        <div class="proj reveal">
+          <div class="tag mono">GenAI · RAG</div>
+          <h3>Production-Grade RAG System</h3>
+          <p>Input/output guardrails, query router, hybrid search with reranking, audit trail, tracing and an evaluation harness.</p>
+          <div class="chips"><span class="chip">OpenAI</span><span class="chip">Hybrid Search</span><span class="chip">Reranker</span><span class="chip">Guardrails</span><span class="chip">Evals</span></div>
+        </div>
+        <div class="proj reveal">
+          <div class="tag mono">Cloud · AWS</div>
+          <h3>Agentic Support-Ticket Resolution</h3>
+          <p>Customer-support agent system built natively on AWS that classifies, investigates and resolves tickets end to end.</p>
+          <div class="chips"><span class="chip">AWS</span><span class="chip">Agents</span><span class="chip">Serverless</span></div>
+        </div>
+        <div class="proj reveal">
+          <div class="tag mono">Platform</div>
+          <h3>Agent Deployment Platform</h3>
+          <p>Self-hosted platform for deploying chatbots and agentic solutions — both deterministic workflows and LLM-driven agents.</p>
+          <div class="chips"><span class="chip">Python</span><span class="chip">FastAPI</span><span class="chip">Docker</span><span class="chip">Observability</span></div>
+        </div>
+        <div class="proj reveal">
+          <div class="tag mono">BFSI · Healthcare</div>
+          <h3>Banking &amp; Healthcare AI on Azure</h3>
+          <p>RAG and agent solutions for banking and healthcare use cases, built on Azure's AI stack.</p>
+          <div class="chips"><span class="chip">Azure OpenAI</span><span class="chip">AI Search</span><span class="chip">Agents</span></div>
+        </div>
+        <div class="proj reveal">
+          <div class="tag mono">Retail · RAG</div>
+          <h3>RAG for Retail</h3>
+          <p>Retrieval-augmented assistant for a retail business problem. It's provider-agnostic, so it runs on OpenAI, Claude or any other LLM API depending on which key is configured.</p>
+          <div class="chips"><span class="chip">RAG</span><span class="chip">OpenAI</span><span class="chip">Claude</span><span class="chip">Multi-LLM</span><span class="chip">Vector Search</span></div>
+        </div>
+        <div class="proj reveal">
+          <div class="tag mono">Telecom · NOC</div>
+          <h3>NOC Outage Orchestrator</h3>
+          <p>Orchestrator-workers agent system for a multi-site fiber-cut outage, with five sub-agents running in sequence: Detector, Triage, Root-Cause, Remediation and Tracker.</p>
+          <div class="chips"><span class="chip">MCP</span><span class="chip">FastMCP</span><span class="chip">PostgreSQL</span><span class="chip">asyncpg</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BUILD IN PUBLIC -->
+  <section id="build">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <div class="kicker mono">Building in public</div>
+        <h2>15 AI engineering projects, one by one</h2>
+        <p>Each project ships in its own repo with documentation, run steps, observability and monitoring — agentic where it adds value, not rules dressed up as AI.</p>
+      </div>
+      <div class="bip">
+        <div class="group reveal">
+          <h3>The series includes</h3>
+          <ol>
+            <li>Production RAG pipeline</li>
+            <li>LLM evaluation pipeline</li>
+            <li>LLM gateway</li>
+            <li>Semantic cache</li>
+            <li>Fine-tuning workflow</li>
+            <li>Voice agent</li>
+            <li>LLM red-teaming</li>
+          </ol>
+        </div>
+        <div class="group reveal">
+          <h3>YouTube — coming soon</h3>
+          <p style="color:var(--muted);font-size:.93rem">A channel on building agentic AI for real business operations, told from the telecom trenches: architecture walkthroughs, failure cases, and code you can run.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EXPERTISE -->
+  <section id="expertise">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <div class="kicker mono">Expertise</div>
+        <h2>Agentic AI, end to end</h2>
+      </div>
+      <div class="tags reveal">
+        <span>Multi-Agent Systems</span><span>LangGraph</span><span>RAG</span><span>LLMOps</span><span>Telecom Billing</span><span>NOC Automation</span><span>Retail AI</span><span>Banking &amp; Healthcare AI</span><span>Solution Architecture</span><span>Statistics</span><span>Machine Learning</span>
+      </div>
+      <div class="groups">
+        <div class="group reveal"><h3>Agentic AI</h3><ul><li>LangGraph supervisors</li><li>LangChain</li><li>Tool &amp; SQL actions</li><li>Confidence routing</li><li>Human-in-the-loop</li></ul></div>
+        <div class="group reveal"><h3>GenAI &amp; RAG</h3><ul><li>Hybrid search</li><li>Reranking</li><li>Guardrails</li><li>Evals &amp; tracing</li><li>OpenAI · Azure OpenAI</li></ul></div>
+        <div class="group reveal"><h3>Telecom Domain</h3><ul><li>CDR processing</li><li>Mediation jobs</li><li>Rating engines</li><li>PBF maps · MSC</li><li>NOC operations</li></ul></div>
+        <div class="group reveal"><h3>Data &amp; Platform</h3><ul><li>OpenSearch · ELK</li><li>Python · FastAPI</li><li>Docker</li><li>AWS · Azure</li><li>Statistical modelling</li></ul></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CREDENTIALS -->
+  <section id="credentials">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <div class="kicker mono">Credentials</div>
+        <h2>Education</h2>
+      </div>
+      <div class="creds">
+        <div class="group reveal"><h3>M.Sc. Statistics</h3><p style="color:var(--muted);font-size:.93rem">Osmania University, Hyderabad</p></div>
+        <div class="group reveal"><h3>Certifications</h3><p style="color:var(--muted);font-size:.93rem">Add your certifications here — issuer and year.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="wrap">
+      <div class="contact-box reveal">
+        <div>
+          <div class="kicker mono">Contact</div>
+          <h2>Let's build agents that actually ship.</h2>
+          <p>Open to AI architect and agentic AI leadership roles, consulting and solution design — in India or the UAE, on-site or remote.</p>
+        </div>
+        <div class="clist">
+          <div class="crow"><div><small>Email</small><a class="v" href="mailto:ravimshetty44@gmail.com">ravimshetty44@gmail.com</a></div><button class="copy" data-copy="ravimshetty44@gmail.com">Copy</button></div>
+          <div class="crow"><div><small>LinkedIn</small><a class="v" href="https://www.linkedin.com/in/your-handle">linkedin.com/in/your-handle</a></div></div>
+          <div class="crow"><div><small>GitHub</small><a class="v" href="https://github.com/ravimshetty">github.com/ravimshetty</a></div></div>
+          <div class="crow"><div><small>Location</small><span class="v">Hyderabad, India · Relocating to Dubai</span></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>© 2026 Ravindher Madishetty · Technical Architect, Enterprise AI</span>
+    <span>Hyderabad, India</span>
+  </div>
+</footer>
+
+<script>
+  // mobile menu
+  const btn=document.getElementById('menuBtn'),links=document.getElementById('links');
+  btn.addEventListener('click',()=>links.classList.toggle('open'));
+  links.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>links.classList.remove('open')));
+
+  // copy buttons
+  document.querySelectorAll('.copy').forEach(b=>b.addEventListener('click',async()=>{
+    try{await navigator.clipboard.writeText(b.dataset.copy);b.textContent='Copied';}
+    catch(e){b.textContent='Select & copy';}
+    setTimeout(()=>b.textContent='Copy',1800);
+  }));
+
+  // reveal on scroll
+  const els=document.querySelectorAll('.reveal');
+  if('IntersectionObserver' in window){
+    const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}}),{threshold:.12});
+    els.forEach(el=>io.observe(el));
+  } else els.forEach(el=>el.classList.add('in'));
+</script>
+</body>
+</html>
