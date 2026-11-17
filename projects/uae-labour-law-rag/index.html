@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bilingual Legal RAG: UAE Labour Law &amp; DIFC (EN → AR) | Ravindher Madishetty</title>
+<meta name="description" content="Ask in English, get a cited answer in Arabic. A RAG system over UAE Federal Labour Law and DIFC Employment Law, with guardrails, PII protection, code-switching and English verification for non-Arabic reviewers.">
+<link rel="canonical" href="https://ravimshetty.github.io/projects/uae-labour-law-rag/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Ask in English. Get a cited answer in Arabic.">
+<meta property="og:description" content="An AI assistant for HR teams in the UAE: English or mixed questions on UAE Labour Law and DIFC, answered in Arabic with the exact article cited and personal data masked.">
+<meta property="og:url" content="https://ravimshetty.github.io/projects/uae-labour-law-rag/">
+<meta property="og:image" content="https://ravimshetty.github.io/projects/uae-labour-law-rag/img/cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="627">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://ravimshetty.github.io/projects/uae-labour-law-rag/img/cover.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@400;500&family=IBM+Plex+Sans+Arabic:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0b0f14; --bg2:#111821; --card:#141c26; --line:#223040;
+    --ink:#e8eef5; --muted:#8fa1b3; --accent:#3ee6a4; --accent2:#f5b544; --bad:#ff7a7a;
+    --radius:14px; --max:1120px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{background:var(--bg);color:var(--ink);font-family:Inter,system-ui,sans-serif;line-height:1.65;font-size:16px;-webkit-font-smoothing:antialiased}
+  a{color:inherit;text-decoration:none}
+  .wrap{max-width:var(--max);margin:0 auto;padding:0 22px}
+  .mono{font-family:"IBM Plex Mono",monospace}
+  .ar{font-family:"IBM Plex Sans Arabic",sans-serif;direction:rtl}
+  h1,h2,h3{font-family:"Space Grotesk",sans-serif;line-height:1.15;letter-spacing:-.02em}
+  p{color:var(--muted)}
+  strong{color:var(--ink);font-weight:500}
+
+  header{position:sticky;top:0;z-index:50;background:rgba(11,15,20,.82);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+  nav{display:flex;align-items:center;justify-content:space-between;height:64px;gap:16px}
+  .brand{font-family:"Space Grotesk";font-weight:700;font-size:1.05rem;display:flex;gap:10px;align-items:center}
+  .dot{width:9px;height:9px;border-radius:50%;background:var(--accent);box-shadow:0 0 12px var(--accent)}
+  .navlinks{display:flex;gap:22px;font-size:.9rem;color:var(--muted)}
+  .navlinks a:hover{color:var(--accent)}
+
+  .hero{padding:72px 0 56px;position:relative;overflow:hidden}
+  .hero::before{content:"";position:absolute;inset:0;background:
+     radial-gradient(600px 300px at 85% 10%,rgba(62,230,164,.12),transparent 70%),
+     radial-gradient(500px 280px at 0% 90%,rgba(245,181,68,.08),transparent 70%);pointer-events:none}
+  .eyebrow{display:inline-flex;gap:8px;align-items:center;font-size:.76rem;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);border:1px solid rgba(62,230,164,.35);padding:6px 12px;border-radius:999px}
+  .hero h1{font-size:clamp(2.2rem,5vw,3.7rem);margin:22px 0 14px;max-width:900px}
+  .hero h1 .ar{display:block;font-size:.62em;color:var(--accent2);margin-top:12px;font-weight:500;letter-spacing:0}
+  .hero p.lede{font-size:1.1rem;max-width:720px}
+  .cta{display:flex;gap:12px;flex-wrap:wrap;margin-top:28px}
+  .btn{display:inline-block;padding:12px 22px;border-radius:10px;font-weight:500;font-size:.95rem;transition:.2s}
+  .btn.primary{background:var(--accent);color:#06261a}
+  .btn.primary:hover{filter:brightness(1.08)}
+  .btn.ghost{border:1px solid var(--line);color:var(--ink)}
+  .btn.ghost:hover{border-color:var(--accent);color:var(--accent)}
+  .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:44px}
+  .stat{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:18px}
+  .stat b{display:block;font-family:"Space Grotesk";font-size:1.9rem;color:var(--ink)}
+  .stat span{font-size:.84rem;color:var(--muted)}
+
+  section{padding:64px 0;border-top:1px solid var(--line)}
+  .kicker{font-size:.76rem;letter-spacing:.16em;text-transform:uppercase;color:var(--accent)}
+  h2{font-size:clamp(1.7rem,3.4vw,2.4rem);margin:10px 0 14px}
+  .sec-lede{max-width:760px;margin-bottom:30px}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+  .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:22px}
+  .card h3{font-size:1.08rem;margin-bottom:8px}
+  .card p{font-size:.93rem}
+  .card .num{font-family:"IBM Plex Mono";font-size:.75rem;color:var(--accent2);letter-spacing:.1em}
+
+  .shot{border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;background:#fff}
+  .shot img{display:block;width:100%;height:auto}
+  figcaption{font-size:.85rem;color:var(--muted);margin-top:10px}
+
+  /* pipeline */
+  .flow{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;counter-reset:s}
+  .step{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px;position:relative}
+  .step::before{counter-increment:s;content:counter(s,decimal-leading-zero);font-family:"IBM Plex Mono";font-size:.72rem;color:var(--accent)}
+  .step h3{font-size:.98rem;margin:8px 0 6px}
+  .step p{font-size:.82rem;line-height:1.55}
+  .step.guard{border-color:rgba(245,181,68,.45)}
+  .step.guard::after{content:"guardrail";position:absolute;top:14px;right:12px;font-family:"IBM Plex Mono";font-size:.62rem;color:var(--accent2);letter-spacing:.08em;text-transform:uppercase}
+  .ingest{margin-top:18px;display:flex;flex-wrap:wrap;gap:10px;align-items:center;font-size:.86rem;color:var(--muted)}
+  .ingest .k{font-family:"IBM Plex Mono";color:var(--accent);font-size:.75rem;letter-spacing:.1em;text-transform:uppercase;margin-right:4px}
+  .pill{border:1px solid var(--line);border-radius:999px;padding:6px 12px;background:var(--bg2)}
+  .arrow{color:var(--accent)}
+
+  table{width:100%;border-collapse:collapse;font-size:.92rem}
+  th,td{text-align:left;padding:12px 14px;border-bottom:1px solid var(--line);vertical-align:top}
+  th{font-family:"IBM Plex Mono";font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:500}
+  td code,.code{font-family:"IBM Plex Mono";font-size:.84rem;color:#cfe9dd;background:#0d141c;border:1px solid var(--line);padding:2px 6px;border-radius:6px;unicode-bidi:plaintext}
+  td.res{color:var(--muted)}
+  .tablebox{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);overflow-x:auto}
+
+  .quote{border-left:3px solid var(--accent2);background:rgba(245,181,68,.06);padding:16px 20px;border-radius:0 10px 10px 0;margin:22px 0;color:var(--ink)}
+  ul.ticks{list-style:none;display:grid;gap:10px;margin-top:6px}
+  ul.ticks li{padding-left:24px;position:relative;color:var(--muted);font-size:.94rem}
+  ul.ticks li::before{content:"▸";position:absolute;left:0;color:var(--accent)}
+  .chips{display:flex;flex-wrap:wrap;gap:8px}
+  .chip{font-family:"IBM Plex Mono";font-size:.76rem;padding:5px 10px;border-radius:6px;background:#0d141c;border:1px solid var(--line);color:#b9c7d4}
+  .ok{color:var(--accent)} .warn{color:var(--accent2)} .bad{color:var(--bad)}
+
+  .final{text-align:center;padding:72px 0}
+  .final h2{max-width:760px;margin:10px auto 14px}
+  .final p{max-width:620px;margin:0 auto}
+  .final .cta{justify-content:center}
+  footer{padding:30px 0;border-top:1px solid var(--line);color:var(--muted);font-size:.85rem}
+  footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
+  .disclaimer{font-size:.8rem;color:var(--muted);margin-top:18px}
+
+  @media (max-width:960px){
+    .flow{grid-template-columns:1fr 1fr}
+    .grid3{grid-template-columns:1fr 1fr}
+    .stats{grid-template-columns:1fr 1fr}
+  }
+  @media (max-width:640px){
+    .grid2,.grid3,.flow{grid-template-columns:1fr}
+    .navlinks{display:none}
+    .hero{padding:52px 0 40px}
+    section{padding:48px 0}
+    .stat b{font-size:1.3rem}
+    .stat{padding:14px}
+  }
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <nav>
+      <a class="brand" href="/"><span class="dot"></span>Ravindher Madishetty</a>
+      <div class="navlinks">
+        <a href="#hr">For HR teams</a>
+        <a href="#architecture">Architecture</a>
+        <a href="#codeswitch">Code-switching</a>
+        <a href="#trust">Guardrails &amp; privacy</a>
+        <a href="#hire">Work with me</a>
+      </div>
+      <a class="btn ghost mono" style="padding:8px 14px;font-size:.82rem" href="https://github.com/ravimshetty/uae-labour-law-rag">GitHub ↗</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <!-- HERO -->
+  <div class="hero">
+    <div class="wrap">
+      <span class="eyebrow mono">Case study · HR &amp; Legal AI · UAE / GCC</span>
+      <h1>Ask in English. Get a cited answer in Arabic.
+        <span class="ar" lang="ar">اسأل بالإنجليزية، واحصل على إجابة موثّقة بالعربية</span>
+      </h1>
+      <p class="lede">An AI assistant that answers employee and candidate questions on <strong>UAE Labour Law</strong> and the <strong>DIFC Employment Law</strong>: leave, probation, notice periods, gratuity, working hours. Questions can be in English, Arabic or a mix. Answers come back in Arabic, with the exact law article cited, personal data masked, and an English check so reviewers who don't read Arabic can trust them.</p>
+      <div class="cta">
+        <a class="btn primary" href="#hire">Work with me in the UAE or KSA</a>
+        <a class="btn ghost" href="#demo">See it working</a>
+        <a class="btn ghost" href="https://github.com/ravimshetty/uae-labour-law-rag">Code on GitHub ↗</a>
+      </div>
+      <div class="stats">
+        <div class="stat"><b>EN → AR</b><span>English or mixed questions, cited Arabic answers</span></div>
+        <div class="stat"><b>Mainland + DIFC</b><span>the right law chosen automatically, or both compared</span></div>
+        <div class="stat"><b>PII masked</b><span>Emirates ID, phone, IBAN hidden before any AI sees them</span></div>
+        <div class="stat"><b>100%</b><span>answers carry an article citation in testing</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOR HR -->
+  <section id="hr">
+    <div class="wrap">
+      <div class="kicker mono">For HR, talent acquisition &amp; vendor partners</div>
+      <h2>Where this fits in a GCC people team</h2>
+      <p class="sec-lede">Employment questions come in all day, in two languages, under two legal regimes. Getting them wrong costs disputes, delayed offers and lost trust. This is the kind of assistant I design and deliver.</p>
+      <div class="grid2">
+        <div class="card"><div class="num">HR SHARED SERVICES</div><h3>Bilingual employee helpdesk</h3><p>"How many sick days are fully paid?" or "كم مدة الإنذار؟" answered instantly, in Arabic or with an English summary, each answer pointing to the article it relies on.</p></div>
+        <div class="card"><div class="num">TALENT ACQUISITION</div><h3>Faster, accurate offer conversations</h3><p>Probation length, notice period and gratuity explained to candidates consistently, with mainland and DIFC differences handled automatically.</p></div>
+        <div class="card"><div class="num">VENDORS · STAFFING · EOR</div><h3>One consistent answer across clients</h3><p>Staffing and employer-of-record partners serving mainland and DIFC clients get the same grounded answer every time, with an audit trail.</p></div>
+        <div class="card"><div class="num">COMPLIANCE &amp; LEGAL</div><h3>Traceable and privacy-first</h3><p>Every answer is logged with the articles used and the checks it passed. Personal data never reaches the AI model or the logs.</p></div>
+      </div>
+      <div class="quote" style="margin-top:24px"><strong>Riyadh and the wider GCC:</strong> the same design carries over to the Saudi Labor Law. Arabic is authoritative there too, and the router, Arabic-first retrieval, privacy layer and English verification are reusable as they are. A new regime is a new source plus routing rules, not a rebuild.</div>
+    </div>
+  </section>
+
+  <!-- PROBLEM -->
+  <section id="problem">
+    <div class="wrap">
+      <div class="kicker mono">The problem</div>
+      <h2>Why a simple chatbot isn't enough: legal answers in the UAE are bilingual, and the wrong language changes the law</h2>
+      <p class="sec-lede">HR teams, employees and advisors ask employment questions in English, often mixed with Arabic terms or Arabic typed in Latin letters. The answer is often needed in Arabic. A plain "retrieve English, translate to Arabic" chatbot fails in four ways:</p>
+      <div class="grid2">
+        <div class="card"><div class="num">01 · AUTHORITY</div><h3>The Arabic text is the law</h3><p>For federal legislation the Arabic version prevails in any conflict. Machine-translating the English version back into Arabic produces legal wording that may not match the official text.</p></div>
+        <div class="card"><div class="num">02 · JURISDICTION</div><h3>Two regimes, different rules</h3><p>Mainland employers follow the federal law; DIFC has its own law and courts. Gratuity, notice and leave rules differ, so mixing them gives confidently wrong answers.</p></div>
+        <div class="card"><div class="num">03 · LANGUAGE</div><h3>People don't type clean English</h3><p><span class="code">notice period فترة الإنذار?</span>, <span class="code">how many days ijaza?</span> and Arabic-Indic digits like <span class="code">٣٠</span> all break keyword search and naive translation.</p></div>
+        <div class="card"><div class="num">04 · TRUST &amp; PRIVACY</div><h3>Reviewers can't read the output, and users paste personal data</h3><p>Teams without Arabic speakers can't tell if an answer is right. Users paste Emirates IDs, phone numbers and IBANs into questions.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DEMO -->
+  <section id="demo">
+    <div class="wrap">
+      <div class="kicker mono">Demo</div>
+      <h2>A mixed-language question, answered in Arabic with citations</h2>
+      <p class="sec-lede">The question mixes English and Arabic and contains an Emirates ID. The ID is masked before retrieval and generation. The system routes to mainland law, cites the notice-period article, and adds the disclaimer.</p>
+      <figure>
+        <div class="shot"><img src="img/ui.png" alt="Web UI: English question with Arabic terms on the left, Arabic answer with article citations on the right" loading="lazy"></div>
+        <figcaption>English input on the left, right-to-left Arabic answer on the right, with jurisdiction, privacy and code-switching badges and clickable source cards.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- ARCHITECTURE -->
+  <section id="architecture">
+    <div class="wrap">
+      <div class="kicker mono">Architecture</div>
+      <h2>Ten stages from question to verified answer</h2>
+      <p class="sec-lede">Every stage is a small, testable module. The defaults run fully offline, and switching to OpenAI or Azure OpenAI (UAE North region) is a configuration change.</p>
+      <div class="flow">
+        <div class="step"><h3>PII vault</h3><p>Emirates ID, UAE phone, email, IBAN, card, passport and names become placeholders like <span class="code">&lt;EMIRATES_ID_1&gt;</span>.</p></div>
+        <div class="step"><h3>Code-switch normaliser</h3><p>Splits English and Arabic text, maps Arabizi, normalises digits, links legal concepts.</p></div>
+        <div class="step guard"><h3>Input guard</h3><p>Prompt injection (EN + AR), scope, other countries, harmful intent, high-stakes flag.</p></div>
+        <div class="step"><h3>Jurisdiction router</h3><p>Mainland, DIFC, or both (compare). ADGM is detected and declined.</p></div>
+        <div class="step"><h3>Hybrid retrieval</h3><p>EN and AR queries × BM25 and dense search, fused with Reciprocal Rank Fusion.</p></div>
+        <div class="step"><h3>Article pairing</h3><p>Each article is returned with its official Arabic and English versions side by side.</p></div>
+        <div class="step"><h3>Generation</h3><p>Modern Standard Arabic, a citation after every rule, official Arabic wording reused.</p></div>
+        <div class="step guard"><h3>Output guard</h3><p>Citations valid, every number grounded in the source, Arabic ratio, PII leak scan. One retry with feedback.</p></div>
+        <div class="step guard"><h3>English verification</h3><p>Per-sentence check against the English source, plus back-translation and an LLM judge.</p></div>
+        <div class="step"><h3>Audit</h3><p>Hashed query, redacted text, cited articles and flags. Raw text is never stored.</p></div>
+      </div>
+      <div class="ingest">
+        <span class="k">Ingestion</span>
+        <span class="pill">Official PDFs (EN + AR)</span><span class="arrow">→</span>
+        <span class="pill">Arabic PDF repair (RTL, glyph forms)</span><span class="arrow">→</span>
+        <span class="pill">Article-aware chunking</span><span class="arrow">→</span>
+        <span class="pill">EN ↔ AR article pairing</span><span class="arrow">→</span>
+        <span class="pill">BM25 (Arabic stemming) + vector index</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- DECISIONS -->
+  <section id="decisions">
+    <div class="wrap">
+      <div class="kicker mono">Design decisions</div>
+      <h2>The choices that matter in a legal, bilingual system</h2>
+      <div class="grid3">
+        <div class="card"><h3>Quote the Arabic, don't translate it</h3><p>Federal articles are paired with their official Arabic text, so the model reuses authoritative wording. DIFC law exists only in English, so those answers are labelled <span class="ar" lang="ar">ترجمة غير رسمية</span> (unofficial translation).</p></div>
+        <div class="card"><h3>Route before you retrieve</h3><p>An explicit, auditable router separates mainland and DIFC. When the question is ambiguous, the answer compares both regimes instead of guessing.</p></div>
+        <div class="card"><h3>Articles as the unit of truth</h3><p>Small clause chunks retrieve well, but citations always point to whole articles. Table-of-contents duplicates are removed during ingestion.</p></div>
+        <div class="card"><h3>Deterministic guardrails first</h3><p>Rules are cheap, explainable and unit-tested. LLM-based checks are an extra layer, not the foundation.</p></div>
+        <div class="card"><h3>Numbers as a cross-language anchor</h3><p>Days, percentages and years look the same in any language. Any number in the answer that isn't in the cited source triggers a retry.</p></div>
+        <div class="card"><h3>Runs on locked-down laptops</h3><p>The core is pure Python, so it runs under Windows Smart App Control. CI simulates that environment on every push.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CODE-SWITCHING -->
+  <section id="codeswitch">
+    <div class="wrap">
+      <div class="kicker mono">Bilingual code-switching</div>
+      <h2>Built for how people in the UAE actually type</h2>
+      <p class="sec-lede">A bilingual legal glossary (English, Arabic and Arabizi forms) turns messy input into two clean search queries, one per language.</p>
+      <div class="tablebox">
+        <table>
+          <thead><tr><th>User types</th><th>What the system understands</th><th>Retrieved</th></tr></thead>
+          <tbody>
+            <tr><td><code>sick leave كم يوم بأجر كامل in mainland?</code></td><td class="res">Arabic span → <em>sick leave, full pay</em>; route → mainland</td><td>Federal Art. 31</td></tr>
+            <tr><td><code>how many days ijaza in DIFC?</code></td><td class="res">Arabizi <em>ijaza</em> → annual leave → <span class="ar" lang="ar">الإجازة السنوية</span></td><td>DIFC Art. 27</td></tr>
+            <tr><td><code>fatrat al tajruba max for mainland?</code></td><td class="res">Arabizi phrase → probation period</td><td>Federal Art. 9</td></tr>
+            <tr><td><code>notice period ٣٠ يوم</code></td><td class="res">Arabic-Indic digits → 30</td><td>Federal Art. 43</td></tr>
+            <tr><td><code>كم ساعة العمل اليومية في القطاع الخاص؟</code></td><td class="res">Arabic only; <em>private sector</em> → mainland</td><td>Federal Art. 17</td></tr>
+            <tr><td><code>notice period DIFC vs mainland</code></td><td class="res">Both regimes → two-section comparison</td><td>Art. 43 + DIFC Art. 62</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- TRUST -->
+  <section id="trust">
+    <div class="wrap">
+      <div class="kicker mono">Guardrails, privacy and verification</div>
+      <h2>An answer only goes out when it can be trusted</h2>
+      <div class="grid2" style="margin-bottom:26px">
+        <div class="card">
+          <h3>Guardrails</h3>
+          <ul class="ticks">
+            <li>Prompt injection blocked in English and Arabic, including instructions hidden in retrieved text</li>
+            <li>Off-topic, other-country and harmful requests refused politely in Arabic</li>
+            <li>Every <span class="code">[S1]</span> citation must point to a real retrieved article</li>
+            <li>Numbers not found in the source trigger one regeneration with validator feedback</li>
+            <li>High-stakes questions (lawsuits, absconding) get an extra "seek legal advice" note</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>Data privacy</h3>
+          <ul class="ticks">
+            <li>UAE-specific PII masked <strong>before</strong> the model, the guardrails or the logs see it</li>
+            <li>Placeholder map lives in memory for one request and is never stored</li>
+            <li>Audit log keeps a SHA-256 hash and the redacted query, with a retention purge</li>
+            <li>Azure OpenAI in UAE North or self-hosted models for data residency (UAE PDPL, DIFC DP Law)</li>
+            <li>No-store caching, security headers and rate limiting by default</li>
+          </ul>
+        </div>
+      </div>
+      <div class="grid2" style="align-items:start">
+        <div>
+          <h3 style="font-size:1.25rem;margin-bottom:10px">"How do I know it's right if I can't read Arabic?"</h3>
+          <p>Each Arabic sentence gets an English verification card: the cited article in English, every number checked against that source, the legal topics detected, and (with a live model) a literal back-translation and a judge verdict.</p>
+          <div class="quote">Tamper test: changing "30 days" to "45 days" in an answer is flagged <span class="bad">❌ unsupported</span>. Citing the annual-leave article for a gratuity claim is flagged <span class="warn">⚠️ review</span>.</div>
+          <p>The same check found a real glossary gap during testing, before any user could hit it.</p>
+        </div>
+        <figure>
+          <div class="shot"><img src="img/verify.png" alt="English verification report: each Arabic sentence with its cited English source, number checks and verdict" loading="lazy"></div>
+          <figcaption>English verification report for a gratuity question.</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- RESULTS -->
+  <section id="results">
+    <div class="wrap">
+      <div class="kicker mono">Results</div>
+      <h2>Measured, not assumed</h2>
+      <p class="sec-lede">A 23-case evaluation set covers English, Arabic, code-switched, Arabizi, comparison and adversarial questions. These baseline numbers come from the bundled sample corpus in offline mode. They are the regression baseline before running on the official PDFs with production models.</p>
+      <div class="stats" style="margin-top:0">
+        <div class="stat"><b>1.00</b><span>Recall@6: right article retrieved</span></div>
+        <div class="stat"><b>1.00</b><span>MRR: right article ranked first</span></div>
+        <div class="stat"><b>100%</b><span>Routing accuracy, mainland vs DIFC</span></div>
+        <div class="stat"><b>100%</b><span>Guardrail cases handled correctly</span></div>
+      </div>
+      <div class="grid2" style="margin-top:22px">
+        <div class="card">
+          <h3>Engineering</h3>
+          <ul class="ticks">
+            <li>37 automated tests: unit, API and end-to-end</li>
+            <li>CI on every push, including a simulated Windows Smart App Control run</li>
+            <li>Runs three ways: pure Python, Docker, or FastAPI</li>
+            <li>Offline mode with no API keys, for demos and CI</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>Stack</h3>
+          <div class="chips" style="margin-top:6px">
+            <span class="chip">Python</span><span class="chip">FastAPI</span><span class="chip">OpenAI / Azure OpenAI</span>
+            <span class="chip">text-embedding-3-large</span><span class="chip">BM25 + Arabic stemming</span><span class="chip">Reciprocal Rank Fusion</span>
+            <span class="chip">bge-reranker-v2-m3 (optional)</span><span class="chip">pypdf / pdfplumber</span><span class="chip">Docker</span>
+            <span class="chip">GitHub Actions</span><span class="chip">pytest</span><span class="chip">RTL web UI</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- NEXT -->
+  <section id="next">
+    <div class="wrap">
+      <div class="kicker mono">What's next</div>
+      <h2>Roadmap</h2>
+      <div class="grid3">
+        <div class="card"><h3>Amendment-aware answers</h3><p>Effective dates per article, so users can ask what the law said in a given year.</p></div>
+        <div class="card"><h3>Calculator tools</h3><p>Gratuity and leave calculations done by deterministic tools the model calls, not by generated arithmetic.</p></div>
+        <div class="card"><h3>KSA: Saudi Labor Law</h3><p>Add Saudi Labor Law as a third regime, with routing between UAE mainland, DIFC and KSA, plus Saudi PDPL-aligned data handling.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HIRE -->
+  <section id="hire">
+    <div class="wrap">
+      <div class="grid2" style="align-items:center">
+        <div>
+          <div class="kicker mono">Work with me</div>
+          <h2>Ravindher Madishetty, Technical Architect, Enterprise AI</h2>
+          <p>14+ years in data science, AI and ML, currently at HCLTech, building agentic AI that runs real operations. I design systems like this end to end: architecture, guardrails, privacy, evaluation and delivery.</p>
+          <ul class="ticks" style="margin-top:14px">
+            <li><strong>Open to:</strong> AI architect, GenAI and agentic AI leadership roles in the <strong>UAE</strong> (Dubai, Abu Dhabi) and <strong>KSA</strong> (Riyadh)</li>
+            <li><strong>Vendors &amp; partners:</strong> solution design and delivery for HR-tech, legal-tech and enterprise AI programs</li>
+            <li><strong>Domains:</strong> telecom operations, banking/KYC, HR &amp; legal knowledge assistants</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3 style="margin-bottom:14px">Get in touch</h3>
+          <div style="display:grid;gap:12px">
+            <a class="btn primary" style="text-align:center" href="https://www.linkedin.com/in/ravindher-madishetty-16b33719">Message me on LinkedIn</a>
+            <a class="btn ghost" style="text-align:center" href="mailto:ravimshetty44@gmail.com?subject=Bilingual%20legal%20RAG%20%E2%80%94%20let%27s%20talk">ravimshetty44@gmail.com</a>
+            <a class="btn ghost" style="text-align:center" href="/">Full profile &amp; more projects</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="final">
+    <div class="wrap">
+      <div class="kicker mono">Open source</div>
+      <h2>Architecture, code, tests and run steps are all on GitHub</h2>
+      <p>Technical teams can clone it and run the 10-question smoke test in a minute with no API key, then point it at the official laws.</p>
+      <div class="cta">
+        <a class="btn primary" href="https://github.com/ravimshetty/uae-labour-law-rag">github.com/ravimshetty/uae-labour-law-rag</a>
+      </div>
+      <p class="disclaimer">General legal information, not legal advice. The federal law's Arabic text is the authoritative version.</p>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>© 2026 Ravindher Madishetty · Technical Architect, Enterprise AI</span>
+    <span class="mono"><a href="/">ravimshetty.github.io</a></span>
+  </div>
+</footer>
+</body>
+</html>
